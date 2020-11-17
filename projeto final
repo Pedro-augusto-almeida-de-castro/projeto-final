@@ -1,0 +1,165 @@
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+class Contato
+{
+private:
+    std::string nome;
+    std::string tel;
+    std::string email;
+
+public:
+    Contato(const std::string &nome, const std::string &tel, const std::string &email);
+
+    std::string getNome();
+
+    void setNome(const std::string &nome);
+
+    std::string getTel();
+
+    void setTel(const std::string &tel);
+
+    std::string getEmail();
+
+    void setEmail(const std::string &email);
+
+    std::string toString();
+
+};
+class Agenda
+{
+public:
+    std::vector<Contato*> Contatos = std::vector<Contato*>();
+
+    Agenda();
+
+    std::vector<Contato*> getContatos();
+
+    void setContatos(std::vector<Contato*> &Contatos);
+
+    void addCont(Contato *c);
+    Contato *mostra(Contato *c);
+    void removeCont(Contato *c);
+
+
+    void motraLista(std::vector<Contato*> &List);
+};
+	Contato::Contato(const std::string &nome, const std::string &tel, const std::string &email)
+	{
+		this->nome = nome;
+		this->tel = tel;
+		this->email = email;
+	}
+
+	std::string Contato::getNome()
+	{
+		return nome;
+	}
+
+	void Contato::setNome(const std::string &nome)
+	{
+		this->nome = nome;
+	}
+
+	std::string Contato::getTel()
+	{
+		return tel;
+	}
+
+	void Contato::setTel(const std::string &tel)
+	{
+		this->tel = tel;
+	}
+
+	std::string Contato::getEmail()
+	{
+		return email;
+	}
+
+	void Contato::setEmail(const std::string &email)
+	{
+		this->email = email;
+	}
+
+	std::string Contato::toString()
+	{
+		return "Nome: " + nome + "\n" + "Tel=" + tel + "\n" + "E-mail=" + email;
+	}
+Agenda::Agenda()
+{
+}
+
+std::vector<Contato*> Agenda::getContatos()
+{
+    return Contatos;
+}
+
+void Agenda::setContatos(std::vector<Contato*> &Contatos)
+{
+    this->Contatos = Contatos;
+}
+
+void Agenda::addCont(Contato *c)
+{
+    Contatos.push_back(c);
+}
+
+Contato *Agenda::mostra(Contato *c)
+{
+    std::vector<Contato*>::const_iterator it = Contatos.begin();
+    while (it != Contatos.end())
+    {
+        Contato *a = (Contato) *it;
+        if (a->getNome() == c->getNome())
+        {
+            return a;
+        }
+        it++;
+    }
+    return nullptr;
+}
+
+void Agenda::removeCont(Contato *c)
+{
+    for (int i = 0; i < Contatos.size(); i++)
+    {
+        Contato *aux = Contatos[i];
+        if (aux->getNome() == c->getNome())
+        {
+            Contatos.erase(Contatos.begin() + i);
+        }
+    }
+}
+
+void Agenda::motraLista(std::vector<Contato*> &List)
+{
+    std::vector<Contato*>::const_iterator it = List.begin();
+    while (it != List.end())
+    {
+        Contato *a = (Contato) *it;
+        std::cout << a << L"\n" << std::endl;
+        it++;
+    }
+}
+
+int main(int argc, char **argv)
+{
+    Contato *c1 = new Contato("Pedro","213165","c.@");
+    Contato *c2 = new Contato("c","b","c.@$%");
+    Contato *c3 = new Contato("v","b","c");
+    Contato *c4 = new Contato("n","b","c");
+    Contato *c5 = new Contato("VOCE SAIU","b","c");
+    Agenda *a = new Agenda();
+    a->addCont(c5);
+    a->addCont(c4);
+    a->addCont(c3);
+    a->addCont(c2);
+    a->addCont(c1);
+    /*a->motraLista(a->getContatos());
+    a->removeCont(c5);
+    std::cout << "***********************************************************\n***************************************\n" << std::endl;
+    a->motraLista(a->getContatos());
+
+    delete a;*/
+}
